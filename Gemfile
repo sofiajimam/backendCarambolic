@@ -64,6 +64,6 @@ group :development do
   # gem "spring"
 end
 
-
 gem "graphql", "~> 2.1"
-gem "graphiql-rails", group: :development
+gem "bcrypt", "~> 3.1.7"
+gem "graphiql-rails"

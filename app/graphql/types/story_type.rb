@@ -7,6 +7,9 @@ module Types
     field :bookmark, Types::BookmarkType, null: true
     field :acts, [Types::ActType], null: true
 
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+
     def bookmark
       Loaders::RecordLoader.for(Bookmark).load(object.bookmark_id)
     end

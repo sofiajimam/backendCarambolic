@@ -2,30 +2,75 @@
 
 module Types
   class QueryType < Types::BaseObject
-    field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do
-      argument :id, ID, required: true, description: "ID of the object."
+    include GraphQL::Types::Relay::HasNodeField
+    include GraphQL::Types::Relay::HasNodesField
+
+    field :user, Types::UserType, null: false do
+      description "Find a user by ID"
+      argument :id, ID, required: true
     end
 
-    def node(id:)
-      context.schema.object_from_id(id, context)
+    def user(id:)
+      ::User.find_by(id: id)
     end
 
-    field :nodes, [Types::NodeType, null: true], null: true, description: "Fetches a list of objects given a list of IDs." do
-      argument :ids, [ID], required: true, description: "IDs of the objects."
+    field :users, [Types::UserType], null: false do
+      description "Find all users"
     end
 
-    def nodes(ids:)
-      ids.map { |id| context.schema.object_from_id(id, context) }
+    def users
+      ::User.all
     end
 
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
+    field :bookmark, Types::BookmarkType, null: false do
+      description "Find a bookmark by ID"
+      argument :id, ID, required: true
+    end
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    def bookmark(id:)
+      ::Bookmark.find_by(id: id)
+    end
+
+    field :bookmarks, [Types::BookmarkType], null: false do
+      description "Find all bookmarks"
+    end
+
+    def bookmarks
+      ::Bookmark.all
+    end
+
+    field :story, Types::StoryType, null: false do
+      description "Find a story by ID"
+      argument :id, ID, required: true
+    end
+
+    def story(id:)
+      ::Story.find_by(id: id)
+    end
+
+    field :stories, [Types::StoryType], null: false do
+      description "Find all stories"
+    end
+
+    def stories
+      ::Story.all
+    end
+
+    field :act, Types::ActType, null: false do
+      description "Find an act by ID"
+      argument :id, ID, required: true
+    end
+
+    def act(id:)
+      ::Act.find_by(id: id)
+    end
+
+    field :acts, [Types::ActType], null: false do
+      description "Find all acts"
+    end
+
+    def acts
+      ::Act.all
     end
   end
 end

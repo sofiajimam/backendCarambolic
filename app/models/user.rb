@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  has_secure_password
   has_many :bookmarks, dependent: :destroy
 
   validates :name, presence: true
