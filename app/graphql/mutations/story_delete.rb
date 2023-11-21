@@ -10,6 +10,7 @@ module Mutations
 
     def resolve(story_id:)
       story = ::Story.find(story_id)
+      raise GraphQL::ExecutionError, "Story not found" if story.nil?
 
       if story.destroy
         {

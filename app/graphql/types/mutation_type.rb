@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :user_delete, mutation: Mutations::UserDelete
     field :story_delete, mutation: Mutations::StoryDelete
     field :story_create, mutation: Mutations::StoryCreate
     field :act_delete, mutation: Mutations::ActDelete

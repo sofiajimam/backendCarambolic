@@ -10,6 +10,7 @@ module Mutations
 
     def resolve(bookmark_id:)
       bookmark = ::Bookmark.find(bookmark_id)
+      raise GraphQL::ExecutionError, "Bookmark not found" if bookmark.nil?
 
       if bookmark.destroy
         {

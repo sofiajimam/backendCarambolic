@@ -10,6 +10,7 @@ module Mutations
 
     def resolve(act_id:)
       act = ::Act.find(act_id)
+      raise GraphQL::ExecutionError, "Act not found" if act.nil?
 
       if act.destroy
         {

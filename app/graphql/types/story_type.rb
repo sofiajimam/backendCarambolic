@@ -9,9 +9,5 @@ module Types
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-
-    def bookmark
-      Loaders::RecordLoader.for(Bookmark).load(object.bookmark_id)
-    end
   end
 end
