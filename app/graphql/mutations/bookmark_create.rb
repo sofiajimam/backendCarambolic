@@ -9,12 +9,14 @@ module Mutations
     field :bookmark, Types::BookmarkType, null: true
 
     def resolve(bookmark_input:)
+      current_user = context[:current_user]
+
       bookmark = ::Bookmark.new(
         title: bookmark_input.title,
         url: bookmark_input.url,
         thumbnail: bookmark_input.thumbnail,
         summary: bookmark_input.summary,
-        user_id: bookmark_input.user_id,
+        user_id: current_user.id,
       )
 
       if bookmark.save

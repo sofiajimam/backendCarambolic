@@ -9,7 +9,7 @@ module Mutations
     field :act, Types::ActType, null: true
 
     def resolve(act_id:)
-      act = ::Act.find(act_id)
+      act = ::Act.find_by(id: act_id)
       raise GraphQL::ExecutionError, "Act not found" if act.nil?
 
       if act.destroy

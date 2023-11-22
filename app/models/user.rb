@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
+  has_many :stories, through: :bookmarks
 
   validates :name, presence: true
 

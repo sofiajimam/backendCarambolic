@@ -6,7 +6,5 @@ module Types
     argument :url, String, required: true
     argument :thumbnail, String, required: true
     argument :summary, String, required: true
-
-    argument :user_id, ID, required: true
   end
 end

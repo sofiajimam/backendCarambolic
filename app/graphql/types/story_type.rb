@@ -3,6 +3,7 @@
 module Types
   class StoryType < Types::BaseObject
     field :id, ID, null: false
+    field :title, String, null: true
     field :is_public, Boolean, null: true
     field :bookmark, Types::BookmarkType, null: true
     field :acts, [Types::ActType], null: true

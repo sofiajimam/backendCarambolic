@@ -67,3 +67,4 @@ end
 gem "graphql", "~> 2.1"
 gem "bcrypt", "~> 3.1.7"
 gem "graphiql-rails"
+gem "jwt"

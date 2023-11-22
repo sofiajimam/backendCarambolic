@@ -5,6 +5,15 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
+    field :me, Types::UserType, null: true do
+      description "Find the current user"
+    end
+
+    def me
+      unauthorized_field unless context[:current_user]
+      context[:current_user]
+    end
+
     field :user, Types::UserType, null: false do
       description "Find a user by ID"
       argument :id, ID, required: true
