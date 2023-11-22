@@ -14,7 +14,7 @@ module Mutations
 
       if story.destroy
         {
-          story: story,
+          message: "Story deleted successfully",
         }
       else
         raise GraphQL::ExecutionError, story.errors.full_messages.join(", ")

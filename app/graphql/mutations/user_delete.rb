@@ -14,7 +14,7 @@ module Mutations
 
       if user.destroy
         {
-          user: user,
+          message: "User deleted successfully",
         }
       else
         raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")

@@ -14,7 +14,8 @@ module Mutations
 
       if act.destroy
         {
-          act: act,
+          # return success message
+          message: "Act deleted successfully",
         }
       else
         raise GraphQL::ExecutionError, act.errors.full_messages.join(", ")

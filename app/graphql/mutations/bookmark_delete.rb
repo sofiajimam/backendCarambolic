@@ -14,7 +14,7 @@ module Mutations
 
       if bookmark.destroy
         {
-          bookmark: bookmark,
+          message: "Bookmark deleted successfully",
         }
       else
         raise GraphQL::ExecutionError, bookmark.errors.full_messages.join(", ")
