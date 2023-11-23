@@ -5,5 +5,5 @@ class Bookmark < ApplicationRecord
   validates :title, presence: true
   validates :url, presence: true
   validates :thumbnail, presence: true
-  validates :summary, presence: true
+  validates :summary, presence: false
 end

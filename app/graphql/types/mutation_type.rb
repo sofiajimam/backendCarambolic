@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :bookmark_update, mutation: Mutations::BookmarkUpdate
     field :publish_story, mutation: Mutations::PublishStory
     field :user_delete, mutation: Mutations::UserDelete
     field :story_delete, mutation: Mutations::StoryDelete

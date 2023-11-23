@@ -12,14 +12,14 @@ module Mutations
       current_user = context[:current_user]
 
       bookmark = ::Bookmark.new(
-        title: bookmark_input.title,
-        url: bookmark_input.url,
-        thumbnail: bookmark_input.thumbnail,
-        summary: bookmark_input.summary,
+        title: bookmark_input.title, # head title
+        url: bookmark_input.url, # url de la pagina
+        thumbnail: bookmark_input.thumbnail, # favicon
         user_id: current_user.id,
       )
 
       if bookmark.save
+        OpenaiRequestJob.perform_later(bookmark.id, bookmark_input.html_content)
         {
           bookmark: bookmark,
         }
@@ -27,5 +27,7 @@ module Mutations
         raise GraphQL::ExecutionError, bookmark.errors.full_messages.join(", ")
       end
     end
+
+    private
   end
 end

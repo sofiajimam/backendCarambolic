@@ -10,6 +10,7 @@ module Types
 
     field :user, Types::UserType, null: true
     field :stories, [Types::StoryType], null: true
+    field :is_true, Boolean, null: true
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false

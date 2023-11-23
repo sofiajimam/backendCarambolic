@@ -31,8 +31,27 @@ module Carambolic
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # for the env variables
+    config.before_configuration do
+      # Load environment variables from a YAML file if it exists
+      env_file = File.join(Rails.root, "config", "local_env.yml")
+      if File.exist?(env_file)
+        yaml_content = File.read(env_file)
+        env_vars = YAML.safe_load(yaml_content)
+        env_vars.each do |key, value|
+          ENV[key] = value.to_s
+        end
+      end
+    end
+
+    OpenAI.configure do |config|
+      config.access_token = ENV.fetch("OPENAI_ACCESS_TOKEN")
+      config.organization_id = ENV.fetch("OPENAI_ORGANIZATION_ID") # Optional.
+    end
+
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.api_only = true
+    config.active_job.queue_adapter = :sidekiq
   end
 end
