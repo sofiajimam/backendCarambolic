@@ -21,6 +21,7 @@ module Mutations
       )
 
       if story.save
+        OpenaiActsRequestJob.perform_later(bookmark.id, bookmark.summary, story.id)
         {
           story: story,
         }
