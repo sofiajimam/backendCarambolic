@@ -81,6 +81,11 @@ test:
 #
 production:
   <<: *default
-  database: carambolic_production
-  username: carambolic
-  password: <%= ENV["CARAMBOLIC_DATABASE_PASSWORD"] %>
+  #database: carambolic_production
+  #username: carambolic
+  #password: <%= ENV["CARAMBOLIC_DATABASE_PASSWORD"] %>
+  database: <%= ENV['PGDATABASE'] %>
+  username: <%= ENV['PGUSER'] %>
+  password: <%= ENV['PGPASSWORD'] %>
+  host: <%= ENV['PGHOST'] %>
+  port: <%= ENV['PGPORT'] %>
