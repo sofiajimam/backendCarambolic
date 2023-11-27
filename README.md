@@ -1,24 +1,15 @@
-# README
+# Carambolic - Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the backend for the Carambolic project. It is written in Ruby on Rails. And it uses Sidekiq for background jobs.
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+```rb
+bundle install
+```
 
-* System dependencies
+## Running the code
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```rb
+rails s
+```

@@ -3,7 +3,7 @@ class Bookmark < ApplicationRecord
   has_many :stories, dependent: :destroy
 
   validates :title, presence: true
-  validates :url, presence: true
+  validates :url, presence: true, uniqueness: true
   validates :thumbnail, presence: true
   validates :summary, presence: false
 end
