@@ -28,5 +28,5 @@ RUN gem install bundler && bundle install --jobs 20 --retry 5
 
 EXPOSE 3000
 
-CMD rails db:setup ; rails db:migrate ; rails server
+CMD rails db:setup ; rails db:migrate ; rails server -p 3000
 
