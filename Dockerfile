@@ -8,6 +8,7 @@ WORKDIR $RAILS_ROOT
 
 COPY . .
 
+ARG PORT
 ARG DATABASE_URL
 ARG RAILS_ENV
 ARG RAILS_MASTER_KEY
@@ -23,10 +24,11 @@ ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 ENV REDIS_URL=$REDIS_URL
 ENV OPENAI_ORGANIZATION_ID=$OPENAI_ORGANIZATION_ID
 ENV OPENAI_ACCESS_TOKEN=$OPENAI_ACCESS_TOKEN
+ENV PORT=$PORT
 
 RUN gem install bundler && bundle install --jobs 20 --retry 5
 
 EXPOSE 3000
 
-CMD rails db:setup ; rails db:migrate ; rails server -p 3000
+CMD rails db:setup ; rails db:migrate ; rails server
 
