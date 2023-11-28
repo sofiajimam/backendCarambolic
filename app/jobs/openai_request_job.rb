@@ -10,9 +10,7 @@ class OpenaiRequestJob < ApplicationJob
       client = OpenAI::Client.new
 
       # add to the summary the bookmark html_content + a custom prompt
-      prompt = "Desde este contenido HTML, devolverás un JSON de la siguiente manera: {'summarize': " ", 'isTrue': true || false}. "
-      +"'Summarize' es el resumen del contenido HTML, y 'isTrue' solo devolverá 'true' o 'false', ya que evaluarás el contenido y  "
-      +"determinarás si lo que se dice es verdadero o falso. No regreses nada mas, solo el JSON. Las comillas dobles agregale las barras invertidas y/o escapalas. "
+      prompt = "Desde este contenido HTML hazme un resumen:\n\n"
       +"Este es el contenido:\n\n"
 
       end_user = prompt + "' #{html_content} '"
@@ -30,18 +28,45 @@ class OpenaiRequestJob < ApplicationJob
 
       answer = response.dig("choices", 0, "message", "content")
 
-      # from the json parse the summary and isTrue
-      json_string = answer.gsub("'", '"')
+      prompt_2 = "Ahora de este contenido dime si es true o false undercase para que ruby lo pueda leer, solo retorname el valor booleano, nada mas, no quiero notas, no quiero explicaciones, solo el valor booleano:\n\n"
 
-      json_data = JSON.parse(json_string)
+      end_user_2 = prompt_2 + "' #{answer} '"
 
-      summary = json_data["summarize"]
-      is_true = json_data["isTrue"]
+      response = client.chat(
+        parameters: {
+          #model: "gpt-3.5-turbo", # Required.
+          model: "gpt-4", # Required.
+          messages: [
+            { role: "user", content: end_user_2 },
+          ], # Required.
+          temperature: 0.7,
+        },
+      )
 
-      puts "summary: #{summary}"
-      puts "is_true: #{is_true}"
+      answer_2 = response.dig("choices", 0, "message", "content")
 
-      bookmark.update(summary: summary, is_true: is_true)
+      puts "ANSWERRRRRR RESUMEEN:"
+      puts answer
+
+      puts "ANSWERRRRRR IS TRUE:"
+      puts answer_2
+
+      # create the json
+      answer_2_boolean = answer_2.downcase == "true" ? true : false
+      json = { "summarize": answer, "isTrue": answer_2_boolean }.to_json
+
+      begin
+        summary = JSON.parse(json)["summarize"]
+        is_true = JSON.parse(json)["isTrue"]
+
+        # Update the bookmark with the summary and isTrue
+        bookmark.update(summary: summary, is_true: is_true)
+
+        puts "Summary: #{summary}"
+        puts "Is True: #{is_true}"
+      rescue JSON::ParserError => e
+        puts "Error reading the JSON: #{e.message}"
+      end
     end
   end
 end
