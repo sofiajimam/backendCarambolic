@@ -8,6 +8,8 @@ class DalleRequestJob < ApplicationJob
     story = Story.find(story_id)
     client = OpenAI::Client.new
 
+    act = JSON.parse(act)
+
     prompt = act["prompt"]
     response = client.images.generate(parameters: { prompt: prompt, size: "1024x1024" })
 
